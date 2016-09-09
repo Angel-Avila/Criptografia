@@ -14,6 +14,7 @@ import static org.mockito.Mockito.when;
 public class CyphersTest {
 
     private Cyphers cypher;
+    private Encryption encryption;
     private String plainText = "el almacen fue encontrado huye";
     private String encryptedCesar = "ov kvwkmox peo oxmyxdbkny reio";
     private String encryptedVigenere = "vv bvilqje pvo ayqtedskzz vzpo";
@@ -28,6 +29,7 @@ public class CyphersTest {
     @Before
     public void setUp() {
         cypher = mock(Cyphers.class);
+        encryption = new Encryption();
 
         // Encrypt
         when(cypher.encrypt(plainText, key)).thenReturn(encryptedText);
@@ -91,15 +93,9 @@ public class CyphersTest {
         assertEquals(plainText, cypher.decryptCesar(encryptedCesar, k1));
     }
 
-    @Ignore
-    public void testGetSumOfKeyValues() {
-        String tmp = "HARAMBEV";
-        int sum = 0;
-
-        for (int i = 0; i < tmp.length(); i++)
-            sum += MathUtils.getIndex(tmp.charAt(i));
-
-        System.out.println(sum % 26);
+    @Test
+    public void testGetK1() {
+        assertEquals(k1, encryption.genK1(key));
     }
 
     @Ignore

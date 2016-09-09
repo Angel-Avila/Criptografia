@@ -10,17 +10,17 @@ public interface Cyphers {
     String k2 = "";
     int[][] k3 = new int[2][2];
 
-    String encrypt(String plainText, String key);
-    String decrypt(String encryptedText, String key);
+    public String encrypt(String plainText, String key);
+    public String decrypt(String encryptedText, String key);
 
-    int genK1(String key);
-    int[][] genK3(String key);
+    public int genK1(String key);
+    public int[][] genK3(String key);
 
-    String encryptCesar(String plainText, int k1);
-    String encryptVigenere(String plainText, String k2);
-    String encryptHill(String plainText, int[][] k3);
+    public String encryptCesar(String plainText, int k1);
+    public String encryptVigenere(String plainText, String k2);
+    public String encryptHill(String plainText, int[][] k3);
 
-    String decryptCesar(String encryptedText, int k1);
-    String decryptVigenere(String encryptedText, String k2);
-    String decryptHill(String encryptedText, int[][] k3);
+    public String decryptCesar(String encryptedText, int k1);
+    public String decryptVigenere(String encryptedText, String k2);
+    public String decryptHill(String encryptedText, int[][] k3);
 }

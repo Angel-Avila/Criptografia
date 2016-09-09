@@ -19,10 +19,7 @@ public class MathUtils {
     public static boolean hasInverse(int[][] matrix) {
         int determinant = determinant(matrix) % 26;
 
-        if(determinant == 0 || getGCD(26, determinant) != 1)
-            return false;
-
-        return true;
+        return !(determinant == 0 || getGCD(26, determinant) != 1);
     }
 
     public static int determinant(int[][] matrix){ //method sig. takes a matrix (two dimensional array), returns determinant.
