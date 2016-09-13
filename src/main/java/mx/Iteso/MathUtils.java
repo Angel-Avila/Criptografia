@@ -16,6 +16,10 @@ public class MathUtils {
         return -1;
     }
 
+    public static char getLetter(int index) {
+        return abecedario[index];
+    }
+
     public static boolean hasInverse(int[][] matrix) {
         int determinant = determinant(matrix) % 26;
 
@@ -58,4 +62,32 @@ public class MathUtils {
         return getGCD(number2, number1%number2);
     }
 
+    public static int[][] get2x2TransverseCofactor(int[][] k3) {
+        return new int[][] {
+            {k3[1][1], -k3[1][0]},
+            {-k3[0][1], k3[0][0]}
+        };
+    }
+
+    public static int[][] multiply(int[][] k3, int[][] letters) {
+        int rowsInA = k3.length;
+        int columnsInA = k3[0].length; // same as rows in B
+        int columnsInB = letters[0].length;
+        int[][] c = new int[rowsInA][columnsInB];
+        for (int i = 0; i < rowsInA; i++) {
+            for (int j = 0; j < columnsInB; j++) {
+                for (int k = 0; k < columnsInA; k++) {
+                    c[i][j] = c[i][j] + k3[i][k] * letters[k][j];
+                }
+            }
+        }
+        return c;
+    }
+
+    public static int modulo(int number, int mod) {
+        while(number < 0)
+            number += mod;
+
+        return number % mod;
+    }
 }

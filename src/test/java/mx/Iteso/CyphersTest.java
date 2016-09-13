@@ -69,7 +69,7 @@ public class CyphersTest {
 
     @Test
     public void testEncryptHill() {
-        assertEquals(encryptedText, cypher.encryptHill(encryptedVigenere, k3));
+        assertEquals(encryptedText, encryption.encryptHill(encryptedVigenere.toUpperCase(), k3));
     }
 
     // Decryption tests
@@ -80,7 +80,7 @@ public class CyphersTest {
 
     @Test
     public void testDecryptHill() {
-        assertEquals(encryptedVigenere, cypher.decryptHill(encryptedText, k3));
+        assertEquals(encryptedVigenere, encryption.decryptHill(encryptedText, k3));
     }
 
     @Test
@@ -98,9 +98,30 @@ public class CyphersTest {
         assertEquals(k1, encryption.genK1(key));
     }
 
+    @Test
+    public void testGetK3() {
+        assertEquals(k3, encryption.genK3(key));
+    }
+
     @Ignore
     public void testGetDeterminantGetGCD() {
         int det = MathUtils.determinant(k3);
         System.out.println("Det: " + det + ", GCD: " + MathUtils.getGCD(26, det) + ", " + (17*7));
+    }
+
+    @Ignore
+    public void testMatrixMult() {
+        int[][] a = new int[][] {
+                {4,1},
+                {7,3}
+        };
+
+        int[][] b = new int[][] {
+                {17},
+                {0}
+        };
+
+        System.out.println(a[0][0] + ", " + a[0][1] + ", " + a[1][0] + ", " + a[1][1]);
+        System.out.println(MathUtils.multiply(a,b)[0][0] + ", " + MathUtils.multiply(a,b)[1][0]);
     }
 }
