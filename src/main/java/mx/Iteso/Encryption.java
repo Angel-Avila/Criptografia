@@ -8,6 +8,7 @@ import static mx.Iteso.MathUtils.*;
 public class Encryption implements  Cyphers {
 
     private final int ALPH_SIZE = 26;
+    private final int UP_SET = 65;
 
     public String encrypt(String plainText, String key) {
         return encryptHill(encryptVigenere(encryptCesar(plainText, genK1(plainText)), plainText), genK3(plainText));
@@ -56,15 +57,66 @@ public class Encryption implements  Cyphers {
 
         return k3;
     }
+    /** This function receives  a String and a integer
+     *  This function encrypts the plaintext to Cesar encryption
+     *  This function returns a String with Cesar encryption   **/
 
     public String encryptCesar(String plainText, int k1) {
-
-        return "Cesar";
+        String encryptTextOut = "";
+        char moves;
+        for(int i=0;i<plainText.length();i++){
+            if(plainText.charAt(i)!=' '){
+                moves = (char)(plainText.charAt(i)+k1);
+                if(moves > 'z'){
+                    // We use the formula m + k with a shift of the ALPH_SIZE
+                    moves = (char)((plainText.charAt(i)+k1)-ALPH_SIZE);
+                    encryptTextOut += moves;
+                }
+                    // We use the formula m + k
+                else{
+                    moves = (char)((plainText.charAt(i)+k1));
+                    encryptTextOut += moves;
+                }
+            }
+            else{
+                moves = (char)(plainText.charAt(i));
+                encryptTextOut +=moves;
+            }
+        }
+        return encryptTextOut.toUpperCase();
     }
 
-    public String encryptVigenere(String plainText, String k2) {
+    /** This function receives  a String and a key string
+     *  This function encrypts the plaintext to Vigenere encryption
+     *  This function returns a String with Vigenere encryption   **/
 
-        return "Vigenere";
+    public String encryptVigenere(String plainText, String k2) {
+        plainText = plainText.toUpperCase();
+        String encryptTextOut = "";
+        int counter = 0;
+        int converter;
+        char moves;
+        for(int i=0;i<plainText.length();i++) {
+            if (plainText.charAt(i) != ' ') {
+                if (k2.length() > counter) {
+                    // We use the formula (M[n] - K[n]) and used a shift of the ascii position
+                    moves = (char) (plainText.charAt(i)-UP_SET + k2.charAt(counter)-UP_SET);
+                    // We use the formula (M[n] - K[n]) % 26
+                    converter = (int) moves %ALPH_SIZE;
+                    // We use the defined alphabet
+                    encryptTextOut += abecedario[converter];
+                    counter++;
+                    if(counter == k2.length()){
+                        counter = 0;
+                    }
+                }
+            }
+            else {
+                moves = plainText.charAt(i);
+                encryptTextOut += moves;
+            }
+        }
+        return encryptTextOut;
     }
 
     public String encryptHill(String plainText, int[][] k3) {
@@ -108,14 +160,67 @@ public class Encryption implements  Cyphers {
         return encrypted.toString();
     }
 
-    public String decryptCesar(String encryptedText, int k1) {
+    /** This function receives  a String and a integer
+     *  This function decrypts Cesar encryption to plain text
+     *  This function returns a String with plain text   **/
 
-        return null;
+    public String decryptCesar(String encryptedText, int k1) {
+        encryptedText = encryptedText.toUpperCase();
+        String decryptTextOut = "";
+        char moves;
+        for(int i=0;i<encryptedText.length();i++){
+            if(encryptedText.charAt(i)!=' '){
+                moves = (char)(encryptedText.charAt(i)-k1);
+                if(moves < 'A'){
+                    // We use the formula m - k with a shift of the ALPH_SIZE
+                    moves = (char)((encryptedText.charAt(i)-k1)+ALPH_SIZE);
+                    decryptTextOut += moves;
+                }
+                else{
+                    // We use the formula m - k
+                    moves = (char)((encryptedText.charAt(i)-k1));
+                    decryptTextOut += moves;
+                }
+            }
+            else{
+                moves = (char)(encryptedText.charAt(i));
+                decryptTextOut +=moves;
+            }
+        }
+        return decryptTextOut.toLowerCase();
     }
 
-    public String decryptVigenere(String encryptedText, String k2) {
+    /** This function receives  a String and a key String
+     *  This function decrypts Vigenere encryption to plain text
+     *  This function returns a String with plain text   **/
 
-        return null;
+    public String decryptVigenere(String encryptedText, String k2) {
+        encryptedText = encryptedText.toUpperCase();
+        String decryptTextOut = "";
+        int counter = 0;
+        int converter;
+        char moves;
+        for(int i=0;i<encryptedText.length();i++) {
+            if (encryptedText.charAt(i) != ' ') {
+                if (k2.length() > counter) {
+                    // We use the formula (M[n] - K[n]) and used a shift of the ascii position + ALPH_Size (Safe value)
+                    moves = (char) (((encryptedText.charAt(i)-UP_SET) - (k2.charAt(counter)-UP_SET)) + ALPH_SIZE);
+                    // We use the formula (M[n] - K[n]) % 26
+                    converter = (int) moves  % ALPH_SIZE;
+                    // We use the defined alphabet
+                    decryptTextOut += abecedario[converter];
+                    counter++;
+                    if(counter == k2.length()){
+                        counter = 0;
+                    }
+                }
+            }
+            else {
+                moves = encryptedText.charAt(i);
+                decryptTextOut += moves;
+            }
+        }
+        return decryptTextOut.toLowerCase();
     }
 
     public String decryptHill(String encryptedText, int[][] k3) {
