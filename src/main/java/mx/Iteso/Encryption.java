@@ -11,11 +11,23 @@ public class Encryption implements  Cyphers {
     private final int UP_SET = 65;
 
     public String encrypt(String plainText, String key) {
-        return encryptHill(encryptVigenere(encryptCesar(plainText, genK1(key)), key), genK3(key));
+        int k1 = genK1(key);
+        int[][] k3 = genK3(key);
+        String encryptedCesar = encryptCesar(plainText, k1);
+        String encryptedVigenere = encryptVigenere(encryptedCesar, key);
+        String encryptedHill = encryptHill(encryptedVigenere, k3);
+        return encryptedHill;
+        //return encryptHill(encryptVigenere(encryptCesar(plainText, genK1(key)), key), genK3(key));
     }
 
     public String decrypt(String encryptedText, String key) {
-        return decryptCesar(decryptVigenere(decryptHill(encryptedText, genK3(key)), key), genK1(key));
+        int k1 = genK1(key);
+        int[][] k3 = genK3(key);
+        String encryptedVigenere = decryptHill(encryptedText, k3);
+        String encryptedCesar = decryptVigenere(encryptedVigenere, key);
+        String plainText = decryptCesar(encryptedCesar, k1);
+        return plainText;
+        //return decryptCesar(decryptVigenere(decryptHill(encryptedText, genK3(key)), key), genK1(key));
     }
 
     public int genK1(String key) {
@@ -55,6 +67,10 @@ public class Encryption implements  Cyphers {
             i++;
         }
 
+        System.out.println("[0][0]: " + k3[0][0] + "\n" +
+                           "[1][0]: " + k3[1][0] + "\n" +
+                           "[0][1]: " + k3[0][1] + "\n" +
+                           "[1][1]: " + k3[1][1]);
         return k3;
     }
 
@@ -228,7 +244,7 @@ public class Encryption implements  Cyphers {
         int x = 1;
 
         // We get the determinant of k3
-        double detK = determinant(k3) % ALPH_SIZE;
+        double detK = modulo(determinant(k3), ALPH_SIZE);
 
         // We find the value of y
         double y = (ALPH_SIZE*x+1)/detK;
@@ -236,7 +252,7 @@ public class Encryption implements  Cyphers {
             x++;
             y = (ALPH_SIZE*x+1)/detK;
         }
-        int invDetK = (int)y % ALPH_SIZE;
+        int invDetK = modulo((int)y, ALPH_SIZE);
 
         // We calculate the transverse cofactor of K
         int[][] transvCofK = get2x2TransverseCofactor(k3);
@@ -245,9 +261,9 @@ public class Encryption implements  Cyphers {
         int[][] inverseK = transvCofK;
         for(int i = 0; i < 2; i++)
             for(int j = 0; j < 2; j++)
-                inverseK[j][i] = (inverseK[j][i] * invDetK) % ALPH_SIZE;
+                inverseK[j][i] = modulo((inverseK[j][i] * invDetK), ALPH_SIZE);
 
         // We call encryptHill with the inverse K since decrypting is the same process at this point as encrypting
-        return encryptHill(encryptedText, inverseK).toLowerCase();
+        return encryptHill(encryptedText, inverseK);
     }
 }

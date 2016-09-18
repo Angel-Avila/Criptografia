@@ -71,6 +71,7 @@ public class CyphersTest {
     // Encryption tests
     @Test
     public void testEncrypt(){
+        encryption.encrypt(plainText, "HARAMBE");
         assertEquals(encryptedText, encryption.encrypt(plainText, key));
     }
 
@@ -92,6 +93,7 @@ public class CyphersTest {
     // Decryption tests
     @Test
     public void testDecrypt() {
+        encryption.decrypt("AA WYQNMTB IZX KCNSELEUEK UKFN", "HARAMBE");
         assertEquals(plainText, encryption.decrypt(encryptedText, key));
     }
 
