@@ -9,15 +9,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by Angel on 9/8/16.
+ * Created by Angel && Diego on 9/8/16.
  */
 public class CyphersTest {
 
     private Cyphers cypher;
     private Encryption encryption;
     private String plainText = "el almacen fue encontrado huye";
-    private String encryptedCesar = "ov kvwkmox peo oxmyxdbkny reio";
-    private String encryptedVigenere = "vv bvilqje pvo ayqtedskzz vzpo";
+    private String encryptedCesar = "OV KVWKMOX PEO OXMYXDBKNY REIO";
+    private String encryptedVigenere = "VV KMILQJE PEF AYQTEDBBZZ VZPO";
     private String encryptedText = "RT HTEFIXC VRE ASILCZWOTJ RJBE";
     private String key = "HAARMBEV";
     private int k1 = 10;
