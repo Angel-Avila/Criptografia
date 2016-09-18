@@ -6,7 +6,7 @@ import static mx.Iteso.MathUtils.*;
  * Created by Angel on 9/9/16.
  */
 public class Encryption implements  Cyphers {
-    
+
     private final int ALPH_SIZE = 26;
     private final int UP_SET = 65;
 
@@ -237,7 +237,7 @@ public class Encryption implements  Cyphers {
                 decryptTextOut += moves;
             }
         }
-        return decryptTextOut.toLowerCase();
+        return decryptTextOut;
     }
 
     public String decryptHill(String encryptedText, int[][] k3) {
