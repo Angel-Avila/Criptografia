@@ -13,7 +13,8 @@ public class Encryption implements  Cyphers {
     public String encrypt(String plainText, String key) {
         int k1 = genK1(key);
         int[][] k3 = genK3(key);
-        String encryptedCesar = encryptCesar(plainText, k1);
+        String text = returnLetterPairedText(plainText);
+        String encryptedCesar = encryptCesar(text, k1);
         String encryptedVigenere = encryptVigenere(encryptedCesar, key);
         String encryptedHill = encryptHill(encryptedVigenere, k3);
         return encryptedHill;
@@ -148,6 +149,7 @@ public class Encryption implements  Cyphers {
 
             int letterInd1 = i;
             i++;
+
             while(plainText.charAt(i) == ' ') i++;
 
             int letterInd2 = i;
