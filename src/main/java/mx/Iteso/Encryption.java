@@ -6,7 +6,7 @@ import static mx.Iteso.MathUtils.*;
  * Created by Angel on 9/9/16.
  */
 public class Encryption implements  Cyphers {
-
+    
     private final int ALPH_SIZE = 26;
     private final int UP_SET = 65;
 
@@ -67,10 +67,10 @@ public class Encryption implements  Cyphers {
             i++;
         }
 
-        System.out.println("[0][0]: " + k3[0][0] + "\n" +
+        /*System.out.println("[0][0]: " + k3[0][0] + "\n" +
                            "[1][0]: " + k3[1][0] + "\n" +
                            "[0][1]: " + k3[0][1] + "\n" +
-                           "[1][1]: " + k3[1][1]);
+                           "[1][1]: " + k3[1][1]);*/
         return k3;
     }
 

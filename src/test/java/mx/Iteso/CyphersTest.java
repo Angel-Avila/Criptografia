@@ -71,7 +71,16 @@ public class CyphersTest {
     // Encryption tests
     @Test
     public void testEncrypt(){
-        encryption.encrypt(plainText, "HARAMBE");
+        // You can get a whole text withput punctuation marks to encrypt here if you remove the comments, test and copy what is in story
+        /*
+        String instring = "";
+        String[] words = instring.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+        StringBuilder builder = new StringBuilder();
+        for(String s : words) {
+            builder.append(s);
+            builder.append(" ");
+        }
+        String story = builder.toString();*/
         assertEquals(encryptedText, encryption.encrypt(plainText, key));
     }
 
