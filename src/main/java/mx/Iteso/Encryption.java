@@ -11,11 +11,11 @@ public class Encryption implements  Cyphers {
     private final int UP_SET = 65;
 
     public String encrypt(String plainText, String key) {
-        return encryptHill(encryptVigenere(encryptCesar(plainText, genK1(plainText)), plainText), genK3(plainText));
+        return encryptHill(encryptVigenere(encryptCesar(plainText, genK1(key)), key), genK3(key));
     }
 
     public String decrypt(String encryptedText, String key) {
-        return "Not coded decryption";
+        return decryptCesar(decryptVigenere(decryptHill(encryptedText, genK3(key)), key), genK1(key));
     }
 
     public int genK1(String key) {
@@ -57,6 +57,7 @@ public class Encryption implements  Cyphers {
 
         return k3;
     }
+
     /** This function receives  a String and a integer
      *  This function encrypts the plaintext to Cesar encryption
      *  This function returns a String with Cesar encryption   **/

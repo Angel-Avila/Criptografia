@@ -13,12 +13,29 @@ import static org.mockito.Mockito.when;
  */
 public class CyphersTest {
 
+    /**
+     * Test encryption 1:
+     * private String plainText = "el almacen fue encontrado huye";
+     * private String encryptedCesar = "OV KVWKMOX PEO OXMYXDBKNY REIO";
+     * private String encryptedVigenere = "VV KMILQJE PEF AYQTEDBBZZ VZPO";
+     * private String encryptedText = "RT SWEFIXC VCH ASILCZHRTJ RJBE";
+     * private String key = "HAARMBEV";
+     * private int k1 = 10;
+     * private int[][] k3 = new int[][] {
+                {7, 0},
+                {0, 17}
+       };
+     *
+     */
+
     private Cyphers cypher;
     private Encryption encryption;
+
+    // Test encryption 1:
     private String plainText = "el almacen fue encontrado huye";
     private String encryptedCesar = "OV KVWKMOX PEO OXMYXDBKNY REIO";
     private String encryptedVigenere = "VV KMILQJE PEF AYQTEDBBZZ VZPO";
-    private String encryptedText = "RT HTEFIXC VRE ASILCZWOTJ RJBE";
+    private String encryptedText = "RT SWEFIXC VCH ASILCZHRTJ RJBE";
     private String key = "HAARMBEV";
     private int k1 = 10;
     private int[][] k3 = new int[][] {
@@ -54,28 +71,28 @@ public class CyphersTest {
     // Encryption tests
     @Test
     public void testEncrypt(){
-        assertEquals(encryptedText, cypher.encrypt(plainText, key));
+        assertEquals(encryptedText, encryption.encrypt(plainText, key));
     }
 
     @Test
     public void testEncryptCesar() {
-        assertEquals(encryptedCesar, cypher.encryptCesar(plainText, 10));
+        assertEquals(encryptedCesar, encryption.encryptCesar(plainText, encryption.genK1(key)));
     }
 
     @Test
     public void testEncryptVigenere() {
-        assertEquals(encryptedVigenere, cypher.encryptVigenere(encryptedCesar, key));
+        assertEquals(encryptedVigenere, encryption.encryptVigenere(encryptedCesar, key));
     }
 
     @Test
     public void testEncryptHill() {
-        assertEquals(encryptedText, encryption.encryptHill(encryptedVigenere.toUpperCase(), k3));
+        assertEquals(encryptedText, encryption.encryptHill(encryptedVigenere.toUpperCase(), encryption.genK3(key)));
     }
 
     // Decryption tests
     @Test
     public void testDecrypt() {
-        assertEquals(plainText, cypher.decrypt(encryptedText, key));
+        assertEquals(plainText, encryption.decrypt(encryptedText, key));
     }
 
     @Test
@@ -85,12 +102,12 @@ public class CyphersTest {
 
     @Test
     public void testDecryptVigenere() {
-        assertEquals(encryptedCesar, cypher.decryptVigenere(encryptedVigenere, key));
+        assertEquals(encryptedCesar, encryption.decryptVigenere(encryptedVigenere, key));
     }
 
     @Test
     public void testDecryptCesar() {
-        assertEquals(plainText, cypher.decryptCesar(encryptedCesar, k1));
+        assertEquals(plainText, encryption.decryptCesar(encryptedCesar, k1));
     }
 
     @Test
@@ -100,7 +117,7 @@ public class CyphersTest {
 
     @Test
     public void testGetK3() {
-        assertEquals(k3, encryption.genK3(key));
+        assertEquals(encryption.genK3(key), k3);
     }
 
     @Ignore
