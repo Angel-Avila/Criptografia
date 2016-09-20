@@ -18,16 +18,16 @@ public class MathUtils {
 
     public static String returnLetterPairedText(String text) {
         int count = 0;
-        String temp = text;
+        String temp = text.toUpperCase();
 
-        for(int i = 0; i < text.length(); i++)
-            if(getIndex(text.charAt(i)) >= 0)
+        for(int i = 0; i < temp.length(); i++)
+            if(getIndex(temp.charAt(i)) >= 0)
                 count++;
 
-        if(count % 2 == 0)
+        if(count % 2 == 1)
             temp += "x";
 
-        return temp;
+        return temp.toLowerCase();
     }
 
     public static char getLetter(int index) {
